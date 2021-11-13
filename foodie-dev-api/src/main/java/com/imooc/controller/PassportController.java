@@ -40,7 +40,6 @@ public class PassportController {
 
         return WebResponse.ok();
     }
-
     @PostMapping("/regist")
     public WebResponse regist(@RequestBody UserBo userBo) {
         String userName = userBo.getUsername();
