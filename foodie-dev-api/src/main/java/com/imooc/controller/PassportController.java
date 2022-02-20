@@ -41,7 +41,7 @@ public class PassportController {
         return WebResponse.ok();
     }
     @PostMapping("/regist")
-    public WebResponse regist(@RequestBody UserBo userBo) {
+    public WebResponse regist(@RequestBody UserBo userBo, HttpServletRequest request, HttpServletResponse response) {
         String userName = userBo.getUsername();
         String password = userBo.getPassword();
         String confirmPassword = userBo.getConfirmPassword();
@@ -57,7 +57,10 @@ public class PassportController {
             return WebResponse.errorMsg("两次密码输入不一致");
         }
 
-        userService.createUser(userBo);
+        Users user = userService.createUser(userBo);
+
+        CookieUtils.setCookie(request, response, "user", JsonUtils.objectToJson(user), true);
+
 
         return WebResponse.ok();
     }
